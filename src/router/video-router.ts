@@ -1,31 +1,7 @@
 import {Request, Response, Router} from "express";
+import { videos } from "..";
 
-const videos = [
-    {
-        id: 0,
-        title: "string",
-        author: "string",
-        canBeDownloaded: true,
-        minAgeRestriction: null,
-        createdAt: "2022-12-08T17:22:04.968Z",
-        publicationDate: "2022-12-08T17:22:04.968Z",
-        availableResolutions: [
-            "P144"
-        ]
-    },
-    {
-        id: 1,
-        title: "string",
-        author: "string",
-        canBeDownloaded: true,
-        minAgeRestriction: null,
-        createdAt: "2022-12-08T17:22:04.968Z",
-        publicationDate: "2022-12-08T17:22:04.968Z",
-        availableResolutions: [
-            "P144"
-        ]
-    }
-]
+
 
 const inputValidator = ( inputValue: any ,res: Response, field: string, message:string) => {
     if (inputValue  !== String) {
@@ -73,6 +49,7 @@ videoRouter.delete('/:id', (req: Request, res: Response) => {
     }
     res.send(404)
 })
+
 videoRouter.post('/', (req: Request, res: Response) => {
     const newVideo = {
         id: +(new Date()),
