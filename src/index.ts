@@ -37,12 +37,12 @@ app.use(bodyParser({}))
 app.get('/', (req: Request, res: Response) => {
     res.send('Hello World!!!!')
 })
-app.delete('/testing/all-data', (req: Request, res: Response) => {
+app.delete('/hometask_01/api/testing/all-data', (req: Request, res: Response) => {
     videos = []
     res.send(204)
 })
 
-app.use('/videos', videoRouter)
+app.use('/hometask_01/api/videos', videoRouter)
 
 
 app.listen(PORT, () => {

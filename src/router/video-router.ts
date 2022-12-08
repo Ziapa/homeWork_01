@@ -49,7 +49,6 @@ videoRouter.delete('/:id', (req: Request, res: Response) => {
     }
     res.send(404)
 })
-
 videoRouter.post('/', (req: Request, res: Response) => {
     const newVideo = {
         id: +(new Date()),
