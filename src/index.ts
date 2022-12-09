@@ -2,7 +2,7 @@ import express, {Request, Response} from 'express'
 import {videoRouter} from "./router/video-router";
 import bodyParser from "body-parser";
 
-const app = express()
+export const app = express()
 const PORT = 3003
 
 export let videos = [
@@ -35,14 +35,14 @@ export let videos = [
 app.use(bodyParser({}))
 
 app.get('/', (req: Request, res: Response) => {
-    res.send('Hello World!!!!')
+    res.send('Hello Samurai!!!!')
 })
-app.delete('/hometask_01/api/testing/all-data', (req: Request, res: Response) => {
+app.delete('/testing/all-data', (req: Request, res: Response) => {
     videos = []
-    res.send(204)
+    res.status(204).send(videos)
 })
 
-app.use('/hometask_01/api/videos', videoRouter)
+app.use('/videos', videoRouter)
 
 
 app.listen(PORT, () => {
