@@ -3,18 +3,18 @@ import { videos } from "..";
 
 
 
-const inputValidator = ( inputValue: any ,res: Response, field: string, message:string) => {
-    if (inputValue  !== String) {
-        res.status(400)
-            .send([
-                {
-                    message: message,
-                    field: field
-                }
-            ])
-        return
-    }
-}
+// const inputValidator = ( inputValue: any ,res: Response, field: string, message:string) => {
+//     if (inputValue  !== String) {
+//         res.status(400)
+//             .send([
+//                 {
+//                     message: message,
+//                     field: field
+//                 }
+//             ])
+//         return
+//     }
+// }
 
 export const videoRouter = Router()
 
@@ -50,17 +50,19 @@ videoRouter.delete('/:id', (req: Request, res: Response) => {
     res.send(404)
 })
 videoRouter.post('/', (req: Request, res: Response) => {
+
+    const currentDate = new Date()
+    const tomorrowDate = new Date(currentDate.getTime() + 86400000)
+
     const newVideo = {
         id: +(new Date()),
         title: req.body.title,
         author: req.body.author,
-        canBeDownloaded: true,
+        canBeDownloaded: false,
         minAgeRestriction: null,
-        createdAt: "2022-12-08T17:36:21.838Z",
-        publicationDate: "2022-12-08T17:36:21.838Z",
-        availableResolutions: [
-            "P144"
-        ]
+        createdAt: currentDate.toISOString(),
+        publicationDate: tomorrowDate.toISOString(),
+        availableResolutions: req.body.availableResolutions
     }
 
 // inputValidator(req.body.title, res, "title", "should be a string")

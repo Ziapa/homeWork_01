@@ -1,6 +1,5 @@
 import express, {Request, Response} from 'express'
 import {videoRouter} from "./router/video-router";
-import bodyParser from "body-parser";
 
 export const app = express()
 const PORT = 3003
@@ -32,11 +31,12 @@ export let videos = [
     }
 ]
 
-app.use(bodyParser({}))
+app.use(express.json())
 
 app.get('/', (req: Request, res: Response) => {
     res.send('Hello Samurai!!!!')
 })
+
 app.delete('/testing/all-data', (req: Request, res: Response) => {
     videos = []
     res.status(204).send(videos)
@@ -45,6 +45,8 @@ app.delete('/testing/all-data', (req: Request, res: Response) => {
 app.use('/videos', videoRouter)
 
 
+
 app.listen(PORT, () => {
     console.log(`Example app listening on PORT ${PORT}`)
 })
+
