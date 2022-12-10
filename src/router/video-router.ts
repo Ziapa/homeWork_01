@@ -34,7 +34,7 @@ videoRouter.put('/:id', (req: Request, res: Response) => {
     if (video) {
         video.title = req.body.title
         video.author = req.body.author
-        res.send(201)
+        res.send(204)
     } else {
         res.send(404)
     }
