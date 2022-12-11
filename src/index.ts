@@ -4,13 +4,24 @@ import {videoRouter} from "./router/video-router";
 export const app = express()
 const PORT = 3003
 
-export let videos = [
+type videosType = {
+    id: number,
+        title: string,
+    author: string,
+    canBeDownloaded: boolean,
+    minAgeRestriction: null | number,
+    createdAt: string,
+    publicationDate: string,
+    availableResolutions: Array<string>
+}
+
+export let videos: Array<videosType> = [
     {
         id: 0,
         title: "string",
         author: "string",
         canBeDownloaded: true,
-        minAgeRestriction: null,
+        minAgeRestriction: null ,
         createdAt: "2022-12-08T17:22:04.968Z",
         publicationDate: "2022-12-08T17:22:04.968Z",
         availableResolutions: [
