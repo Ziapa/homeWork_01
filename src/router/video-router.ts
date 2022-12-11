@@ -18,6 +18,8 @@ import { videos } from "..";
 
 export const videoRouter = Router()
 
+const currentDate = new Date()
+
 videoRouter.get('/', (req: Request, res: Response) => {
     res.send(videos)
 })
@@ -37,7 +39,7 @@ videoRouter.put('/:id', (req: Request, res: Response) => {
         video.availableResolutions = req.body.availableResolutions
         video.canBeDownloaded = true
         video.minAgeRestriction = req.body.minAgeRestriction
-        video.publicationDate = new Date().toISOString()
+        video.publicationDate = new Date(currentDate.getTime() + 78).toISOString()
         res.send(204)
     } else {
         res.send(404)
@@ -55,7 +57,7 @@ videoRouter.delete('/:id', (req: Request, res: Response) => {
 })
 videoRouter.post('/', (req: Request, res: Response) => {
 
-    const currentDate = new Date()
+
     const tomorrowDate = new Date(currentDate.getTime() + 86400000)
 
     const newVideo = {
