@@ -37,7 +37,7 @@ videoRouter.put('/:id', (req: Request, res: Response) => {
         video.availableResolutions = req.body.availableResolutions
         video.canBeDownloaded = true
         video.minAgeRestriction = req.body.minAgeRestriction
-        // video.publicationDate = new Date().toISOString()
+        video.publicationDate = new Date().toISOString()
         res.send(204)
     } else {
         res.send(404)
