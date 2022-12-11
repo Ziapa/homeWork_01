@@ -41,7 +41,7 @@ videoRouter.put('/:id', (req: Request, res: Response) => {
         video.availableResolutions = req.body.availableResolutions
         video.canBeDownloaded = true
         video.minAgeRestriction = req.body.minAgeRestriction
-        video.publicationDate = new Date(currentDate.getTime() + 86400000).toISOString()
+        video.publicationDate = req.body.publicationDate
         res.send(204)
     } else {
         res.send(404)
@@ -59,8 +59,10 @@ videoRouter.delete('/:id', (req: Request, res: Response) => {
 })
 videoRouter.post('/', (req: Request, res: Response) => {
 
+    const createdAt = new Date()
+    const publicationDate = new Date()
+    publicationDate.setDate(createdAt.getDate() + 1)
 
-    const tomorrowDate = new Date(currentDate.getTime() + 86400000)
 
     const newVideo = {
         id: +(new Date()),
@@ -68,8 +70,8 @@ videoRouter.post('/', (req: Request, res: Response) => {
         author: req.body.author,
         canBeDownloaded: false,
         minAgeRestriction: null,
-        createdAt: currentDate.toISOString(),
-        publicationDate: tomorrowDate.toISOString(),
+        createdAt: createdAt.toISOString(),
+        publicationDate: publicationDate.toISOString(),
         availableResolutions: req.body.availableResolutions
     }
 
