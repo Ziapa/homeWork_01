@@ -15,7 +15,7 @@ export let videos: Array<videosType> = [
         title: "string",
         author: "string",
         canBeDownloaded: true,
-        minAgeRestriction: null ,
+        minAgeRestriction: null,
         createdAt: "2022-12-08T17:22:04.968Z",
         publicationDate: "2022-12-08T17:22:04.968Z",
         availableResolutions: [
@@ -72,8 +72,7 @@ export const videoRepositories = {
         availableResolutions: Array<string>,
         minAgeRestriction: number,
         publicationDate: string
-    }, id: string)
-    {
+    }, id: string) {
         let video = videos.find(v => v.id === +id)
         if (video) {
             video.title = body.title
@@ -85,7 +84,7 @@ export const videoRepositories = {
             return video
         }
     },
-    deleteVideoBeId(id: any){
+    deleteVideoBeId(id: any) {
         for (let i = 0; i < videos.length; i++) {
             if (videos[i].id === +id) {
                 videos.splice(i, 1)
