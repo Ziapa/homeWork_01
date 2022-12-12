@@ -25,7 +25,7 @@ const validator = (value: string, field: string) => {
 
     let length
 
-    field === "title" ? length = 20 : length = 40
+    field === "title" ? length = 40 : length = 20
 
     const errors: ErrorsType = {errorsMessages: []}
 
@@ -35,10 +35,8 @@ const validator = (value: string, field: string) => {
     }
 
     if (value.length >  length) {
-        errors.errorsMessages.push({message: "length > 40", field: field})
+        errors.errorsMessages.push({message: `length > ${length}`, field: field})
     }
-
-
 
     if (!value.trim()) {
         errors.errorsMessages.push({message: "bad request", field: field})
