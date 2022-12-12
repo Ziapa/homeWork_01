@@ -117,6 +117,12 @@ videoRouter.put('/:id', (req: Request, res: Response) => {
     // } else {
     //     res.send(404)
     // }
+
+    const errorsTitle = validator(req.body.title, "title", req.body.author, "author")
+    if (errorsTitle) {
+        res.status(400).send(errorsTitle)
+    }
+
     const video = videoRepositories.updateVideo(req.body, req.params.id)
     if (video) {
         res.send(204)
