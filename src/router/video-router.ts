@@ -94,9 +94,13 @@ videoRouter.post('/', (req: Request, res: Response) => {
 //         res.send(400)
 //     }
 
-    const errors = validator(req.body.title, "title")
-    if (errors) {
-        res.status(400).send(errors)
+    const errorsTitle = validator(req.body.title, "title")
+    const errorsAuthor = validator(req.body.author, "title")
+    if (errorsTitle) {
+        res.status(400).send(errorsTitle)
+    }
+    if (errorsAuthor) {
+        res.status(400).send(errorsAuthor)
     }
 
     const newVideo = videoRepositories.createVideo(req.body)
