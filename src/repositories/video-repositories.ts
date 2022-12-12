@@ -6,8 +6,9 @@ export type videosType = {
     minAgeRestriction: null | number,
     createdAt: string,
     publicationDate: string,
-    availableResolutions: Array<string>
+    availableResolutions: string[] | null
 }
+
 
 export let videos: Array<videosType> = [
     {

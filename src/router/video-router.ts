@@ -16,9 +16,22 @@ import {videoRepositories, videosType} from "../repositories/video-repositories"
 // }
 
 
-const validator = (
-   body: videosType
+export enum ResolutionType {
+    P144 = 'P144',
+    P240 = 'P240',
+    P360 = 'P360',
+    P480 = 'P480',
+    P720 = 'P720',
+    P1080 = 'P1080',
+    P1440 = 'P1440',
+    P2160 = 'P2160'
+}
 
+const validResolution = Object.values(ResolutionType)
+
+
+const validator = (
+    body: videosType
 ) => {
     type ErrorsMessagesType = {
         message: string, field: string
@@ -31,20 +44,24 @@ const validator = (
 
     const errors: ErrorsType = {errorsMessages: []}
 
-    if (body.title === null || body.title.length >  40 || !body.title.trim() ) {
+    body.availableResolutions?.map((value:any) => {
+        if (!validResolution.includes(value)) {
+            errors.errorsMessages.push({message: "bad request", field: "availableResolutions"})
+        }
+    })
+
+    if (body.title === null || body.title.length > 40 || !body.title.trim()) {
         errors.errorsMessages.push({message: "bad request", field: "title"})
     }
-    if (body.author === null || body.author.length >  20 || !body.author.trim()) {
+    if (body.author === null || body.author.length > 20 || !body.author.trim()) {
         errors.errorsMessages.push({message: "bad request", field: "author"})
     }
-    if(Boolean(body.canBeDownloaded)) {
+    if (Boolean(body.canBeDownloaded)) {
         errors.errorsMessages.push({message: "bad request", field: "canBeDownloaded"})
     }
-    if (body.availableResolutions) {
 
-    }
 
-    if (errors.errorsMessages.length > 0) {
+    if (errors.errorsMessages.length) {
         return errors
     }
 }
@@ -98,11 +115,10 @@ videoRouter.post('/', (req: Request, res: Response) => {
 //     }
 
 
-
     const errorsTitle = validator(req.body)
-   if (errorsTitle) {
-       res.status(400).send(errorsTitle)
-   }
+    if (errorsTitle) {
+        res.status(400).send(errorsTitle)
+    }
 
     const newVideo = videoRepositories.createVideo(req.body)
     if (newVideo) {
