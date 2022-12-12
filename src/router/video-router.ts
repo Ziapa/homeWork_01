@@ -23,6 +23,9 @@ const validator = (value: string, field: string) => {
 
     type ErrorsType = { errorsMessages: Array<ErrorsMessagesType> }
 
+    let length
+
+    field === "title" ? length = 20 : length = 40
 
     const errors: ErrorsType = {errorsMessages: []}
 
@@ -31,7 +34,7 @@ const validator = (value: string, field: string) => {
         return errors
     }
 
-    if (value.length > 20) {
+    if (value.length >  length) {
         errors.errorsMessages.push({message: "length > 40", field: field})
     }
 
@@ -95,7 +98,7 @@ videoRouter.post('/', (req: Request, res: Response) => {
 //     }
 
     const errorsTitle = validator(req.body.title, "title")
-    const errorsAuthor = validator(req.body.author, "title")
+    const errorsAuthor = validator(req.body.author, "author")
     if (errorsTitle) {
         res.status(400).send(errorsTitle)
     }
