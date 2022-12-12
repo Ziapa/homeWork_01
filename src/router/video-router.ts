@@ -78,7 +78,7 @@ videoRouter.post('/', (req: Request, res: Response) => {
        res.status(400).send(errors)
     }
 
-    if (req.body.title.length > 40) {
+    if (req.body.title.length > 20) {
         errors.errorsMessages.push({message: "length > 40", field: "title"})
     }
 
