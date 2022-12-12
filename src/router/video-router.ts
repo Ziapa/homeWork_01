@@ -16,6 +16,34 @@ import {videoRepositories} from "../repositories/video-repositories";
 // }
 
 
+const validator = (value: string, field: string) => {
+    type ErrorsMessagesType = {
+        message: string, field: string
+    }
+
+    type ErrorsType = { errorsMessages: Array<ErrorsMessagesType> }
+
+
+    const errors: ErrorsType = {errorsMessages: []}
+
+    if (value === null) {
+        errors.errorsMessages.push({message: "bad request", field: field})
+        return errors
+    }
+
+    if (value.length > 20) {
+        errors.errorsMessages.push({message: "length > 40", field: field})
+    }
+
+    if (!value.trim()) {
+        errors.errorsMessages.push({message: "bad request", field: field})
+    }
+
+    if (errors.errorsMessages.length > 0) {
+        return errors
+    }
+}
+
 export const videoRouter = Router()
 
 
@@ -64,31 +92,8 @@ videoRouter.post('/', (req: Request, res: Response) => {
 //         res.send(400)
 //     }
 
-   type ErrorsMessagesType = {
-        message: string, field: string
-    }
-
-    type ErrorsType = {errorsMessages: Array<ErrorsMessagesType>}
-
-
-    const errors: ErrorsType = {errorsMessages: []}
-
-    if (req.body.title === null) {
-        errors.errorsMessages.push({message: "bad request", field: "title"})
-       res.status(400).send(errors)
-    }
-
-    if (req.body.title.length > 20) {
-        errors.errorsMessages.push({message: "length > 40", field: "title"})
-    }
-
-    if (!req.body.title.trim()) {
-        errors.errorsMessages.push({message: "bad request", field: "title"})
-    }
-
-
-
-    if (errors.errorsMessages.length > 0) {
+    const errors = validator(req.body.title, "title")
+    if (errors) {
         res.status(400).send(errors)
     }
 
@@ -126,7 +131,7 @@ videoRouter.delete('/:id', (req: Request, res: Response) => {
     //         return
     //     }
     // }
-    if (videoRepositories.deleteVideoBeId(req.params.id)){
+    if (videoRepositories.deleteVideoBeId(req.params.id)) {
         res.send(204)
     } else {
         res.send(404)
