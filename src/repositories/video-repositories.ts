@@ -85,7 +85,7 @@ export const videoRepositories = {
             return video
         }
     },
-    deleteVideoBeId(id: string){
+    deleteVideoBeId(id: any){
         for (let i = 0; i < videos.length; i++) {
             if (videos[i].id === +id) {
                 videos.splice(i, 1)
