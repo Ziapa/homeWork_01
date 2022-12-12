@@ -1,5 +1,5 @@
 import {Request, Response, Router} from "express";
-import {videoRepositories} from "../repositories/video-repositories";
+import {videoRepositories, videosType} from "../repositories/video-repositories";
 
 
 // const inputValidator = ( inputValue: any ,res: Response, field: string, message:string) => {
@@ -17,8 +17,8 @@ import {videoRepositories} from "../repositories/video-repositories";
 
 
 const validator = (
-    valueFirst: string, fieldFirst: string,
-    valueSecond: string, fieldSecond: string,
+   body: videosType
+
 ) => {
     type ErrorsMessagesType = {
         message: string, field: string
@@ -31,11 +31,17 @@ const validator = (
 
     const errors: ErrorsType = {errorsMessages: []}
 
-    if (valueFirst === null || valueFirst.length >  40 || !valueFirst.trim()) {
-        errors.errorsMessages.push({message: "bad request", field: fieldFirst})
+    if (body.title === null || body.title.length >  40 || !body.title.trim() ) {
+        errors.errorsMessages.push({message: "bad request", field: "title"})
     }
-    if (valueSecond === null || valueSecond.length >  20 || !valueSecond.trim()) {
-        errors.errorsMessages.push({message: "bad request", field: fieldSecond})
+    if (body.author === null || body.author.length >  20 || !body.author.trim()) {
+        errors.errorsMessages.push({message: "bad request", field: "author"})
+    }
+    if(Boolean(body.canBeDownloaded)) {
+        errors.errorsMessages.push({message: "bad request", field: "canBeDownloaded"})
+    }
+    if (body.availableResolutions) {
+
     }
 
     if (errors.errorsMessages.length > 0) {
@@ -93,7 +99,7 @@ videoRouter.post('/', (req: Request, res: Response) => {
 
 
 
-    const errorsTitle = validator(req.body.title, "title", req.body.author, "author")
+    const errorsTitle = validator(req.body)
    if (errorsTitle) {
        res.status(400).send(errorsTitle)
    }
@@ -118,7 +124,7 @@ videoRouter.put('/:id', (req: Request, res: Response) => {
     //     res.send(404)
     // }
 
-    const errorsTitle = validator(req.body.title, "title", req.body.author, "author")
+    const errorsTitle = validator(req.body)
     if (errorsTitle) {
         res.status(400).send(errorsTitle)
     }
