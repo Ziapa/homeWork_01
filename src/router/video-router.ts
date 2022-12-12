@@ -99,7 +99,7 @@ videoRouter.delete('/:id', (req: Request, res: Response) => {
     //         return
     //     }
     // }
-    if (videoRepositories.deleteVideoBeId(req.body.id)){
+    if (videoRepositories.deleteVideoBeId(req.query.id)){
         res.send(204)
     } else {
         res.send(404)
