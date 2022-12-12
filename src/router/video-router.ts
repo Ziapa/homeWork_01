@@ -77,6 +77,10 @@ videoRouter.post('/', (req: Request, res: Response) => {
         errors.errorsMessages.push({message: "bad request", field: "title"})
     }
 
+    if (req.body.title === null) {
+        errors.errorsMessages.push({message: "bad request", field: "title"})
+    }
+
     if (errors.errorsMessages.length > 0) {
         res.status(500).send(errors)
     }
