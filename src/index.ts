@@ -15,8 +15,6 @@ app.get('/', (req: Request, res: Response) => {
 app.use('/videos', videoRouter)
 app.use('/testing', testingRouter)
 
-
-
 app.listen(PORT, () => {
     console.log(`Example app listening on PORT ${PORT}`)
 })

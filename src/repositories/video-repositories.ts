@@ -71,8 +71,9 @@ export const videoRepositories = {
         author: string,
         availableResolutions: Array<string>,
         minAgeRestriction: number,
-        // publicationDate: string
-    }, id: string) {
+        publicationDate: string
+    }, id: string)
+    {
         let video = videos.find(v => v.id === +id)
         if (video) {
             video.title = body.title
@@ -80,7 +81,7 @@ export const videoRepositories = {
             video.availableResolutions = body.availableResolutions
             video.canBeDownloaded = true
             video.minAgeRestriction = body.minAgeRestriction
-            // video.publicationDate = req.body.publicationDate
+            video.publicationDate = body.publicationDate
             return video
         }
     },
