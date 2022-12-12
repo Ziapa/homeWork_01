@@ -31,8 +31,13 @@ const validator = (value: string, field: string) => {
         return errors
     }
 
-    if (value.length > 20) {
+    if (value.length > 40) {
         errors.errorsMessages.push({message: "length > 40", field: field})
+    }
+
+    if (value.length < 20) {
+        errors.errorsMessages.push({message: "length > 40", field: field})
+
     }
 
     if (!value.trim()) {
