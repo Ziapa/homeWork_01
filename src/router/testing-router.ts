@@ -6,7 +6,7 @@ import {testingRepositories} from "../repositories/testing-repositories";
 export const testingRouter = Router()
 
 
-testingRouter.get('/all-data', (req: Request, res: Response) => {
+testingRouter.delete('/all-data', (req: Request, res: Response) => {
     if (testingRepositories.deleteDB()) {
         res.status(204).send(videos)
     } else {
