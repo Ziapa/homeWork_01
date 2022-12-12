@@ -1,3 +1,4 @@
+
 export type videosType = {
     id: number,
     title: string,
@@ -9,13 +10,19 @@ export type videosType = {
     availableResolutions: Array<string>
 }
 
+export type ErrorsMessagesType = Array<{
+    message: string,
+    field: string
+}>
+
+
 export let videos: Array<videosType> = [
     {
         id: 0,
         title: "string",
         author: "string",
         canBeDownloaded: true,
-        minAgeRestriction: null ,
+        minAgeRestriction: null,
         createdAt: "2022-12-08T17:22:04.968Z",
         publicationDate: "2022-12-08T17:22:04.968Z",
         availableResolutions: [
@@ -39,6 +46,7 @@ export let videos: Array<videosType> = [
 
 export const videoRepositories = {
 
+
     findVideos(id?: string | null) {
         if (id) {
             return videos.find(v => v.id === +id)
@@ -50,6 +58,17 @@ export const videoRepositories = {
         const createdAt = new Date()
         const publicationDate = new Date()
         publicationDate.setDate(createdAt.getDate() + 1)
+
+        let errorsMessages: ErrorsMessagesType = []
+
+
+        if (!body.title.trim()) {
+            errorsMessages.push({message: "", field: "title"})
+        }
+
+        if (errorsMessages.length > 0) {
+            return errorsMessages
+        }
 
         const newVideo = {
             id: +(new Date()),
@@ -72,8 +91,19 @@ export const videoRepositories = {
         availableResolutions: Array<string>,
         minAgeRestriction: number,
         publicationDate: string
-    }, id: string)
-    {
+    }, id: string) {
+
+        let errorsMessages: ErrorsMessagesType = []
+
+
+        if (!body.title.trim()) {
+            errorsMessages.push({message: "", field: "title"})
+        }
+
+        if (errorsMessages.length > 0) {
+            return errorsMessages
+        }
+
         let video = videos.find(v => v.id === +id)
         if (video) {
             video.title = body.title
@@ -85,7 +115,7 @@ export const videoRepositories = {
             return video
         }
     },
-    deleteVideoBeId(id: string){
+    deleteVideoBeId(id: string) {
         for (let i = 0; i < videos.length; i++) {
             if (videos[i].id === +id) {
                 videos.splice(i, 1)
@@ -95,3 +125,7 @@ export const videoRepositories = {
     }
 
 }
+
+
+
+

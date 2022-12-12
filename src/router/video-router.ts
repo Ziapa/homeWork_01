@@ -67,7 +67,7 @@ videoRouter.post('/', (req: Request, res: Response) => {
     if (newVideo) {
         res.status(201).send(newVideo)
     } else {
-        res.send(400)
+        res.status(400).send(videoRepositories.createVideo(req.body))
     }
 
 })
