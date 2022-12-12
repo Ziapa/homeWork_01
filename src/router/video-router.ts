@@ -50,13 +50,18 @@ const validator = (
         }
     })
 
+    // @ts-ignore
+    if (body.minAgeRestriction > 24) {
+        errors.errorsMessages.push({message: "bad request", field: "minAgeRestriction"})
+    }
+
     if (body.title === null || body.title.length > 40 || !body.title.trim()) {
         errors.errorsMessages.push({message: "bad request", field: "title"})
     }
     if (body.author === null || body.author.length > 20 || !body.author.trim()) {
         errors.errorsMessages.push({message: "bad request", field: "author"})
     }
-    if (Boolean(body.canBeDownloaded)) {
+    if (!Boolean(body.canBeDownloaded)) {
         errors.errorsMessages.push({message: "bad request", field: "canBeDownloaded"})
     }
 
