@@ -49,7 +49,7 @@ export const videoRepositories = {
     createVideo(body: { title: string, author: string, availableResolutions: Array<string> }) {
         const createdAt = new Date()
         const publicationDate = new Date()
-        publicationDate.setDate(createdAt.getDate() + 1)
+        // publicationDate.setDate(createdAt.getDate() + 1)
 
         const newVideo = {
             id: +(new Date()),
