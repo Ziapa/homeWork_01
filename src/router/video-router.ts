@@ -75,7 +75,7 @@ videoRouter.post('/', (req: Request, res: Response) => {
 
     if (req.body.title === null) {
         errors.errorsMessages.push({message: "bad request", field: "title"})
-       res.status(500).send(errors)
+       res.status(400).send(errors)
     }
 
     if (!req.body.title.trim()) {
@@ -85,7 +85,7 @@ videoRouter.post('/', (req: Request, res: Response) => {
 
 
     if (errors.errorsMessages.length > 0) {
-        res.status(500).send(errors)
+        res.status(400).send(errors)
     }
 
     const newVideo = videoRepositories.createVideo(req.body)
