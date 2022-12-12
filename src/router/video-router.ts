@@ -16,30 +16,42 @@ import {videoRepositories} from "../repositories/video-repositories";
 // }
 
 
-const validator = (value: string, field: string) => {
+const validator = (
+    valueFirst: string, fieldFirst: string,
+    valueSecond: string, fieldSecond: string,
+) => {
     type ErrorsMessagesType = {
         message: string, field: string
     }
 
     type ErrorsType = { errorsMessages: Array<ErrorsMessagesType> }
 
-    let length
 
-    field === "title" ? length = 40 : length = 20
+    // field === "title" ? length = 40 : length = 20
 
     const errors: ErrorsType = {errorsMessages: []}
 
-    if (value === null) {
-        errors.errorsMessages.push({message: "bad request", field: field})
+    if (valueFirst === null) {
+        errors.errorsMessages.push({message: "bad request", field: fieldFirst})
+        return errors
+    }
+    if (valueSecond === null) {
+        errors.errorsMessages.push({message: "bad request", field: fieldSecond})
         return errors
     }
 
-    if (value.length >  length) {
-        errors.errorsMessages.push({message: `length > ${length}`, field: field})
+    if (valueFirst.length >  40) {
+        errors.errorsMessages.push({message: `length > 40`, field: fieldFirst})
+    }
+    if (valueSecond.length >  20) {
+        errors.errorsMessages.push({message: `length > 20`, field: fieldSecond})
     }
 
-    if (!value.trim()) {
-        errors.errorsMessages.push({message: "bad request", field: field})
+    if (!valueFirst.trim()) {
+        errors.errorsMessages.push({message: "bad request", field: fieldFirst})
+    }
+    if (!valueSecond.trim()) {
+        errors.errorsMessages.push({message: "bad request", field: fieldSecond})
     }
 
     if (errors.errorsMessages.length > 0) {
@@ -95,14 +107,12 @@ videoRouter.post('/', (req: Request, res: Response) => {
 //         res.send(400)
 //     }
 
-    const errorsTitle = validator(req.body.title, "title")
-    const errorsAuthor = validator(req.body.author, "author")
-    if (errorsTitle) {
-        res.status(400).send(errorsTitle)
-    }
-    if (errorsAuthor) {
-        res.status(400).send(errorsAuthor)
-    }
+
+
+    const errorsTitle = validator(req.body.title, "title", req.body.author, "author")
+   if (errorsTitle) {
+       res.status(400).send(errorsTitle)
+   }
 
     const newVideo = videoRepositories.createVideo(req.body)
     if (newVideo) {
