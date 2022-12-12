@@ -31,26 +31,10 @@ const validator = (
 
     const errors: ErrorsType = {errorsMessages: []}
 
-    if (valueFirst === null) {
-        errors.errorsMessages.push({message: "bad request", field: fieldFirst})
-        return errors
-    }
-    if (valueSecond === null) {
-        errors.errorsMessages.push({message: "bad request", field: fieldSecond})
-        return errors
-    }
-
-    if (valueFirst.length >  40) {
-        errors.errorsMessages.push({message: `length > 40`, field: fieldFirst})
-    }
-    if (valueSecond.length >  20) {
-        errors.errorsMessages.push({message: `length > 20`, field: fieldSecond})
-    }
-
-    if (!valueFirst.trim()) {
+    if (valueFirst === null || valueFirst.length >  40 || !valueFirst.trim()) {
         errors.errorsMessages.push({message: "bad request", field: fieldFirst})
     }
-    if (!valueSecond.trim()) {
+    if (valueSecond === null || valueSecond.length >  20 || !valueSecond.trim()) {
         errors.errorsMessages.push({message: "bad request", field: fieldSecond})
     }
 
