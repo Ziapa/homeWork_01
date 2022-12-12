@@ -51,7 +51,7 @@ const validator = (
     })
 
     // @ts-ignore
-    if (body.minAgeRestriction >= 16) {
+    if (body.minAgeRestriction <= 18) {
         errors.errorsMessages.push({message: "bad request", field: "minAgeRestriction"})
     }
 
