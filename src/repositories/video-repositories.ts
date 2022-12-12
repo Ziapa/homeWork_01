@@ -1,4 +1,3 @@
-
 export type videosType = {
     id: number,
     title: string,
@@ -9,12 +8,6 @@ export type videosType = {
     publicationDate: string,
     availableResolutions: Array<string>
 }
-
-export type ErrorsMessagesType = Array<{
-    message: string,
-    field: string
-}>
-
 
 export let videos: Array<videosType> = [
     {
@@ -59,16 +52,6 @@ export const videoRepositories = {
         const publicationDate = new Date()
         publicationDate.setDate(createdAt.getDate() + 1)
 
-        let errorsMessages: ErrorsMessagesType = []
-
-
-        if (!body.title.trim()) {
-            errorsMessages.push({message: "", field: "title"})
-        }
-
-        if (errorsMessages.length > 0) {
-            return errorsMessages
-        }
 
         const newVideo = {
             id: +(new Date()),
@@ -92,17 +75,6 @@ export const videoRepositories = {
         minAgeRestriction: number,
         publicationDate: string
     }, id: string) {
-
-        let errorsMessages: ErrorsMessagesType = []
-
-
-        if (!body.title.trim()) {
-            errorsMessages.push({message: "", field: "title"})
-        }
-
-        if (errorsMessages.length > 0) {
-            return errorsMessages
-        }
 
         let video = videos.find(v => v.id === +id)
         if (video) {

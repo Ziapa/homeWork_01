@@ -63,11 +63,29 @@ videoRouter.post('/', (req: Request, res: Response) => {
 //     } else {
 //         res.send(400)
 //     }
+
+   type ErrorsMessagesType = {
+        message: string, field: string
+    }
+
+    type ErrorsType = {errorsMessages: Array<ErrorsMessagesType>}
+
+
+    const errors: ErrorsType = {errorsMessages: []}
+
+    if (!req.body.title.trim()) {
+        errors.errorsMessages.push({message: "bad request", field: "title"})
+    }
+
+    if (errors.errorsMessages.length > 0) {
+        res.status(500).send(errors)
+    }
+
     const newVideo = videoRepositories.createVideo(req.body)
     if (newVideo) {
         res.status(201).send(newVideo)
     } else {
-        res.status(400).send(videoRepositories.createVideo(req.body))
+
     }
 
 })
