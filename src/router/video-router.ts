@@ -47,6 +47,37 @@ const validator = (
         }
     })
 
+    if (body.title === null || body.title.length > 40 || !body.title.trim()) {
+        errors.errorsMessages.push({message: "bad request", field: "title"})
+    }
+    if (body.author === null || body.author.length > 20 || !body.author.trim()) {
+        errors.errorsMessages.push({message: "bad request", field: "author"})
+    }
+
+
+
+    if (errors.errorsMessages.length) {
+        return errors
+    }
+}
+
+const validatorPut = (
+    body: videosType,
+) => {
+    type ErrorsMessagesType = {
+        message: string, field: string
+    }
+
+    type ErrorsType = { errorsMessages: Array<ErrorsMessagesType> }
+
+    const errors: ErrorsType = {errorsMessages: []}
+
+    body.availableResolutions?.map((value:any) => {
+        if (!validResolution.includes(value)) {
+            errors.errorsMessages.push({message: "bad request", field: "availableResolutions"})
+        }
+    })
+
 
 
     if (body.minAgeRestriction) {
@@ -64,7 +95,8 @@ const validator = (
     }
 
     // @ts-ignore
-    if (body.canBeDownloaded !== true && body.canBeDownloaded !== false) {
+
+    if ( body.canBeDownloaded !== true && body.canBeDownloaded !== false) {
         errors.errorsMessages.push({message: "bad request", field: "canBeDownloaded"})
     }
 
@@ -148,7 +180,7 @@ videoRouter.put('/:id', (req: Request, res: Response) => {
     //     res.send(404)
     // }
 
-    const errorsTitle = validator(req.body)
+    const errorsTitle = validatorPut(req.body)
     if (errorsTitle) {
         res.status(400).send(errorsTitle)
     }

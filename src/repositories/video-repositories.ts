@@ -48,7 +48,7 @@ export const videoRepositories = {
             return videos
         }
     },
-    createVideo(body: { canBeDownloaded: boolean, title: string, author: string, availableResolutions: Array<string> }) {
+    createVideo(body: {  title: string, author: string, availableResolutions: Array<string> }) {
         const createdAt = new Date()
         const publicationDate = new Date()
         publicationDate.setDate(createdAt.getDate() + 1)
@@ -58,7 +58,7 @@ export const videoRepositories = {
             id: +(new Date()),
             title: body.title,
             author: body.author,
-            canBeDownloaded: body.canBeDownloaded,
+            canBeDownloaded: false,
             minAgeRestriction: null,
             createdAt: createdAt.toISOString(),
             publicationDate: publicationDate.toISOString(),
@@ -76,7 +76,8 @@ export const videoRepositories = {
         minAgeRestriction: number,
         publicationDate: string
         canBeDownloaded: boolean,
-    }, id: string) {
+    },
+                id: string) {
 
         let video = videos.find(v => v.id === +id)
         if (video) {
