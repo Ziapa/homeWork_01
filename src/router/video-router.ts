@@ -39,9 +39,6 @@ const validator = (
 
     type ErrorsType = { errorsMessages: Array<ErrorsMessagesType> }
 
-
-    // field === "title" ? length = 40 : length = 20
-
     const errors: ErrorsType = {errorsMessages: []}
 
     body.availableResolutions?.map((value:any) => {
