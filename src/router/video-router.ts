@@ -41,7 +41,7 @@ const validator = (
 
     const errors: ErrorsType = {errorsMessages: []}
 
-    body.availableResolutions?.map((value:any) => {
+    body.availableResolutions?.map((value: any) => {
         if (!validResolution.includes(value)) {
             errors.errorsMessages.push({message: "bad request", field: "availableResolutions"})
         }
@@ -53,7 +53,6 @@ const validator = (
     if (body.author === null || body.author.length > 20 || !body.author.trim()) {
         errors.errorsMessages.push({message: "bad request", field: "author"})
     }
-
 
 
     if (errors.errorsMessages.length) {
@@ -72,13 +71,11 @@ const validatorPut = (
 
     const errors: ErrorsType = {errorsMessages: []}
 
-    body.availableResolutions?.map((value:any) => {
+    body.availableResolutions?.map((value: any) => {
         if (!validResolution.includes(value)) {
             errors.errorsMessages.push({message: "bad request", field: "availableResolutions"})
         }
     })
-
-
 
     if (body.minAgeRestriction) {
         if (body.minAgeRestriction < 1 || body.minAgeRestriction > 18) {
@@ -94,9 +91,20 @@ const validatorPut = (
         errors.errorsMessages.push({message: "bad request", field: "author"})
     }
 
-    // @ts-ignore
+    function isIsoDate(str: string) {
+        if (!/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test(str)) return false;
+        const d = new Date(str);
+        // @ts-ignore
+        return d instanceof Date && !isNaN(d) && d.toISOString() === str; // valid date
+    }
 
-    if ( body.canBeDownloaded !== true && body.canBeDownloaded !== false) {
+    if (!isIsoDate(body.publicationDate)) {
+        errors.errorsMessages.push({message: "bad request", field: "publicationDate"})
+    }
+
+
+    // @ts-ignore
+    if (body.canBeDownloaded !== true && body.canBeDownloaded !== false) {
         errors.errorsMessages.push({message: "bad request", field: "canBeDownloaded"})
     }
 
@@ -200,7 +208,6 @@ videoRouter.delete('/:id', (req: Request, res: Response) => {
     //         return
     //     }
     // }
-
 
 
     if (videoRepositories.deleteVideoBeId(req.params.id)) {
