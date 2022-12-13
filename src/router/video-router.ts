@@ -63,7 +63,8 @@ const validator = (
         errors.errorsMessages.push({message: "bad request", field: "author"})
     }
 
-    if (typeof body.canBeDownloaded !== "boolean") {
+    // @ts-ignore
+    if (body.canBeDownloaded !== true || body.canBeDownloaded !== false) {
         errors.errorsMessages.push({message: "bad request", field: "canBeDownloaded"})
     }
 
