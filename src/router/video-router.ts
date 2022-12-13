@@ -31,7 +31,7 @@ const validResolution = Object.values(ResolutionType)
 
 
 const validator = (
-    body: videosType
+    body: videosType,
 ) => {
     type ErrorsMessagesType = {
         message: string, field: string
@@ -47,8 +47,10 @@ const validator = (
         }
     })
 
-    // @ts-ignore
-    if (body.minAgeRestriction <= 16) {
+
+
+        // @ts-ignore
+    if (1 <= body.minAgeRestriction <= 18) {
         errors.errorsMessages.push({message: "bad request", field: "minAgeRestriction"})
     }
 
