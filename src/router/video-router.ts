@@ -166,10 +166,7 @@ videoRouter.delete('/:id', (req: Request, res: Response) => {
     //     }
     // }
 
-    const errorsTitle = validator(req.body)
-    if (errorsTitle) {
-        res.status(400).send(errorsTitle)
-    }
+
 
     if (videoRepositories.deleteVideoBeId(req.params.id)) {
         res.send(204)
