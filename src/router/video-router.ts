@@ -64,7 +64,7 @@ const validator = (
     }
 
     // @ts-ignore
-    if (body.canBeDownloaded !== true || body.canBeDownloaded !== false) {
+    if (body.canBeDownloaded !== true && body.canBeDownloaded !== false) {
         errors.errorsMessages.push({message: "bad request", field: "canBeDownloaded"})
     }
 
